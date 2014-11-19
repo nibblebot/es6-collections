@@ -1,13 +1,28 @@
-(function (exports) {'use strict';
+(function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module.
+        define([], factory);
+    } else if (typeof exports === 'object') {
+        // Node. Does not work with strict CommonJS, but
+        // only CommonJS-like environments that support module.exports,
+        // like Node.
+        module.exports = factory();
+    } else {
+        // Browser globals (root is window)
+        root.returnExports = factory();
+  }
+}(this, function () {
+  'use strict';
   //shared pointer
   var i;
   //shortcuts
   var defineProperty = Object.defineProperty, is = Object.is;
+  var Collections = {}
 
 
   //Polyfill global objects
   if (typeof WeakMap == 'undefined') {
-    exports.WeakMap = createCollection({
+    Collections.WeakMap = createCollection({
       // WeakMap#delete(key:void*):boolean
       'delete': sharedDelete,
       // WeakMap#clear():
@@ -22,7 +37,7 @@
   }
 
   if (typeof Map == 'undefined') {
-    exports.Map = createCollection({
+    Collections.Map = createCollection({
       // WeakMap#delete(key:void*):boolean
       'delete': sharedDelete,
       //:was Map#get(key:void*[, d3fault:void*]):void*
@@ -44,7 +59,7 @@
   }
 
   if (typeof Set == 'undefined') {
-    exports.Set = createCollection({
+    Collections.Set = createCollection({
       // Set#has(value:void*):boolean
       has: setHas,
       // Set#add(value:void*):boolean
@@ -61,7 +76,7 @@
   }
 
   if (typeof WeakSet == 'undefined') {
-    exports.WeakSet = createCollection({
+    Collections.WeakSet = createCollection({
       // WeakSet#delete(key:void*):boolean
       'delete': sharedDelete,
       // WeakSet#add(value:void*):boolean
@@ -195,4 +210,5 @@
     });
   }
 
-})(typeof exports != 'undefined' && typeof global != 'undefined' ? global : window );
+  return Collections;
+}));
