@@ -35,6 +35,9 @@
       set: sharedSet
     }, true);
   }
+  else {
+      Collections.WeakMap = WeakMap;
+  }
 
   if (typeof Map == 'undefined') {
     Collections.Map = createCollection({
@@ -57,6 +60,9 @@
       clear: sharedClear
     });
   }
+  else {
+      Collections.Map = Map;
+  }
 
   if (typeof Set == 'undefined') {
     Collections.Set = createCollection({
@@ -74,6 +80,9 @@
       forEach: sharedSetIterate
     });
   }
+  else {
+      Collections.Set = Set;
+  }
 
   if (typeof WeakSet == 'undefined') {
     Collections.WeakSet = createCollection({
@@ -86,6 +95,9 @@
       // WeakSet#has(value:void*):boolean
       has: setHas
     }, true);
+  }
+  else {
+      Collections.WeakSet = WeakSet;
   }
 
 
